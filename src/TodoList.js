@@ -24,8 +24,8 @@ class TodoList extends React.Component {
     })
   }
 
-  handleItemClick(index) {
-    console.log(index)
+  handleDelete(index) {
+      console.log(index)
     // 在react中改变state数据时，一般复制一个副本进行操作
     const list = [...this.state.list];
     list.splice(index, 1);
@@ -46,7 +46,8 @@ class TodoList extends React.Component {
         {
           // 此处this指代组件实例
           this.state.list.map((item, index) => {
-            return <TodoItem />
+            // 父组件通过属性的形式向子组件传递参数
+            return <TodoItem delete={this.handleDelete.bind(this)} key={index} content={item} index={index}/>
           }) 
         }
       </ul>
