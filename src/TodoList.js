@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import TodoItem from './TodoItem';
 
-class TodoList extends React.Component {
+class TodoList extends Component {
 
   constructor(props){
     super(props);
@@ -56,16 +56,23 @@ class TodoList extends React.Component {
     )
   }
 
+  // render函数只能返回一个包裹标签
+  // 如果想返回多个标签，可以用React.Fragment标签替换div
+
   render() {
     return (
-      <div>
+      <Fragment>
       <div>
         <input value={this.state.inputValue} onChange={this.handleInputChange}/>
         {/* 此处this指代button,bind(this)后指向组件实例 */}
-        <button onClick={this.handleBtnClick}>add</button>
+        {/* 在react中年写行内样式时应该按照对象的方式编码,最外面花括号表示js表达式，
+        里面的花括号表示js对象
+        style={{background: 'red', color: '#fff'}} 
+        */}
+        <button className='red-btn' onClick={this.handleBtnClick}>add</button>
       </div>
         <ul>{this.getTodoItems()}</ul>
-      </div>
+      </Fragment>
     );
   }
 }
