@@ -9,6 +9,11 @@ class TodoList extends React.Component {
       list: [],
       inputValue: ''
     }
+    
+    // 将bind(this)写在这里改变函数this指向,可以提高代码的性能(涉及到react底层)
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleBtnClick = this.handleBtnClick.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   
   handleBtnClick() {
@@ -34,23 +39,32 @@ class TodoList extends React.Component {
     })
   }
 
+  getTodoItems() {
+    return (
+      // 此处this指代组件实例
+      this.state.list.map((item, index) => {
+        // 父组件通过属性的形式向子组件传递参数
+        return (
+          <TodoItem 
+            delete={this.handleDelete} 
+            key={index} 
+            content={item} 
+            index={index}
+          />
+        )
+      }) 
+    )
+  }
+
   render() {
     return (
       <div>
       <div>
-        <input value={this.state.inputValue} onChange={this.handleInputChange.bind(this)}/>
+        <input value={this.state.inputValue} onChange={this.handleInputChange}/>
         {/* 此处this指代button,bind(this)后指向组件实例 */}
-        <button onClick={this.handleBtnClick.bind(this)}>add</button>
+        <button onClick={this.handleBtnClick}>add</button>
       </div>
-      <ul>
-        {
-          // 此处this指代组件实例
-          this.state.list.map((item, index) => {
-            // 父组件通过属性的形式向子组件传递参数
-            return <TodoItem delete={this.handleDelete.bind(this)} key={index} content={item} index={index}/>
-          }) 
-        }
-      </ul>
+        <ul>{this.getTodoItems()}</ul>
       </div>
     );
   }
