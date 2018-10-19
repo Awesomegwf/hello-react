@@ -1,4 +1,5 @@
 import React from 'react';
+import TodoItem from './TodoItem';
 
 class TodoList extends React.Component {
 
@@ -23,6 +24,16 @@ class TodoList extends React.Component {
     })
   }
 
+  handleItemClick(index) {
+    console.log(index)
+    // 在react中改变state数据时，一般复制一个副本进行操作
+    const list = [...this.state.list];
+    list.splice(index, 1);
+    this.setState({
+      list: list  // 在ES6中键和值名字一样时，可直接写成 list
+    })
+  }
+
   render() {
     return (
       <div>
@@ -35,8 +46,8 @@ class TodoList extends React.Component {
         {
           // 此处this指代组件实例
           this.state.list.map((item, index) => {
-            return <li key={index}>{item}</li>
-          })
+            return <TodoItem />
+          }) 
         }
       </ul>
       </div>
